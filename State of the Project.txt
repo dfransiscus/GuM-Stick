@@ -1,0 +1,13 @@
+Unfortunately at the time of writing, this project will not be complete for the Meshtastic Build-Off. Across two board revisions and constructing 6 prototypes, I've killed the well-working board I intended to take videos with in pusuit of fixing the issue with the buzzer.
+
+The current to-dos are:
+    Re-verify the function of the charging circuit (it worked perfectly in revision 1) due to the reduction of charge current setting and adding of a MOSFET with the idea of reverse polarity protection.
+    The buzzer is still non-functional, I believe it is an issue with how the inductor and capacitors on VSYS are set up and potential interaction with the MOSFET for the buzzer controlled by the GPIO.
+    Change/add the ADC for level of charge protection. There is a diode preventing the XIAO from charging the battery itself, so the voltage drop from that has to be factored in.
+    Add I2C support.
+
+I will continue this project when finances allow, hopefully sometime in September or October of 2026.
+
+To my knowledge there aren't any pocketable boards that have a buzzer, internal antenna, I2C header, and allow for the device to charge even if the power switch is off (one of my gripes with my T-Deck).
+
+The firmware posted is functional as far as basic messaging.
