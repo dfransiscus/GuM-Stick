@@ -1,5 +1,5 @@
-#ifndef _NODESTICK_
-#define _NODESTICK_
+#ifndef _GUMSTICK_
+#define _GUMSTICK_
 
 
 /** Master clock frequency */
@@ -56,7 +56,7 @@ D6/D7, the user button is activated on D0. The button conflicts with the officia
 /*
  * Digital Pins
  */
-#define D0 15    // P0.02 Buzzer
+#define D0 0    // P0.02 Buzzer
 #define D1 1    // P0.03 DIO
 #define D2 2    // P0.28 RST
 #define D3 3    // P0.29 BUSY
@@ -100,25 +100,17 @@ static const uint8_t A5 = PIN_A5;
 #define PIN_LED2 LED_BLUE
 #define PIN_LED3 LED_RED
 
-/*
- * Buttons
- */
-
-/*
- * D0 is shared with PIN_GPS_STANDBY on the L76K GNSS Module, so refer to
- * GPS_L76K definition preventing this conflict
- */
-
-// #define BUTTON_PIN D0
 
 /*
  * Serial Interfaces
  */
+
 #define PIN_SERIAL1_RX (-1)
 #define PIN_SERIAL1_TX (-1)
 
 #define PIN_SERIAL2_RX (-1)
-#define PIN_SERIAL2_TX (-1)
+#define PIN_SERIAL2_TX (-1) 
+
 
 
 /*
@@ -130,8 +122,7 @@ static const uint8_t A5 = PIN_A5;
 // Common pinouts for all SX126x pinouts above
 #define SX126X_TXEN RADIOLIB_NC
 #define SX126X_DIO2_AS_RF_SWITCH // DIO2 is used to control the TX side of the RF switch
-#define SX126X_DIO3_TCXO_VOLTAGE 1.8
-
+#define SX126X_DIO3_TCXO_VOLTAGE 1.8 //should be 3.1? 200 mV below VCC per datasheet, changed 8/3/26 due to non detection of SX1262
 /*
  * SPI Interfaces
  * Defined after pinout for SX1262x to factor in CS pinout variations
@@ -142,6 +133,8 @@ static const uint8_t A5 = PIN_A5;
 #define SX126X_RESET D2
 #define SX126X_BUSY D3
 #define SX126X_CS D4
+#define SX126X_RXEN D5 //added 08/03/26, was missing
+
 #define PIN_SPI_MISO D9
 #define PIN_SPI_MOSI D10
 #define PIN_SPI_SCK D8
@@ -180,49 +173,15 @@ static const uint8_t SCK = PIN_SPI_SCK;
 #define WIRE_INTERFACES_COUNT 1 // changed to 1 for now, as LSM6DS3TR has issues.
 
 
-// If not on legacy or defauly, we're wanting I2C on the back pins
+// I2C pins
 #define PIN_WIRE_SDA D6
 #define PIN_WIRE_SCL D7
 
 
-// // Internal LSM6DS3TR on XIAO nRF52840 Series - put it on wire1
-// // Note: disabled for now, as there are some issues with the LSM.
-// #define PIN_WIRE1_SDA (17)
-// #define PIN_WIRE1_SCL (16)
 
 static const uint8_t SDA = PIN_WIRE_SDA; // Not sure if this is needed
 static const uint8_t SCL = PIN_WIRE_SCL; // Not sure if this is needed
 
-
-
-// // QSPI Pins
-// // ---------
-// #define PIN_QSPI_SCK (24)
-// #define PIN_QSPI_CS (25)
-// #define PIN_QSPI_IO0 (26)
-// #define PIN_QSPI_IO1 (27)
-// #define PIN_QSPI_IO2 (28)
-// #define PIN_QSPI_IO3 (29)
-
-// // On-board QSPI Flash
-// // -------------------
-// #define EXTERNAL_FLASH_DEVICES P25Q16H
-// #define EXTERNAL_FLASH_USE_QSPI
-
-/*
- * Buttons
- * Keep this section after potentially conflicting pin definitions
- * because D0 has multiple possible conflicts with various XIAO modules:
- */
-
-
-#if defined(SEEED_XIAO_NRF_KIT_I2C)
-#define BUTTON_PIN D0
-#endif
-
-#if defined(SEEED_XIAO_NRF_WIO_BTB)
-#define BUTTON_PIN D5
-#endif
 
 #ifdef __cplusplus    
 #endif
